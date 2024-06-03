@@ -16,8 +16,6 @@ class CreateCompraPiezasTable extends Migration
         Schema::create('compra_piezas', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('pieza_id')->constrained('piezas')->onDelete('cascade');
-            $table->foreignId('proveedor_id')->constrained('proveedores')->onDelete('cascade');
             $table->integer('cantidad');
             $table->double('precio_unitario');
             $table->double('costo_total');

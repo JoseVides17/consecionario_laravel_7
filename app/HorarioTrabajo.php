@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class HorarioTrabajo extends Model
 {
-    use HasFactory;
 
     protected $fillable = [
         'dia_semana',

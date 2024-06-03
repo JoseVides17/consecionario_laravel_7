@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pieza extends Model
 {
-    use HasFactory;
 
     protected $fillable = [
         'nombre',

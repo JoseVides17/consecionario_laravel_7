@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Venta extends Model
 {
-    use HasFactory;
 
     protected $fillable = [
         'cliente_id',

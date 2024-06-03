@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class CompraPieza extends Model
 {
-    use HasFactory;
 
     protected $fillable = [
         'pieza_id',

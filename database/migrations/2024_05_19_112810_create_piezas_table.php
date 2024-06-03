@@ -18,7 +18,6 @@ class CreatePiezasTable extends Migration
 
             $table->string('nombre');
             $table->unsignedBigInteger('proveedor_id');
-            $table->foreign('proveedor_id')->references('id')->on('proveedores')->onDelete('cascade');
             $table->integer('cantidad');
             $table->double('precio_unitario');
 

@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Compra extends Model
 {
-    use HasFactory;
 
     protected $fillable = [
         'proveedor_id',

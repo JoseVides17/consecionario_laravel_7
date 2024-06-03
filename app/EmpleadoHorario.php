@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmpleadoHorario extends Model
 {
-    use HasFactory;
 
     protected $fillable = [
         'empleado_id',
