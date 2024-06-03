@@ -33,7 +33,7 @@ class UserController extends Controller
             $query->where('email', 'like', '%' . $email . '%');
         }
 
-        $users = $query->orderBy('name')->paginate(10)->withQueryString();
+        $users = $query->orderBy('rol_id')->paginate(10)->withQueryString();
 
         return view('user.index', compact('users', 'nombre', 'email'));
     }
@@ -90,9 +90,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(SaveUserRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $data = $request->validated();
+        $data = request()->validate($this->validar());
         $user = User::findOrFail($id);
         $user->update($data);
         $user->rol_id = $data['rol_id'];
@@ -123,5 +123,13 @@ class UserController extends Controller
     protected function getInput(Request $request, $key, $default = null)
     {
         return $request->input($key, $default);
+    }
+
+    protected function validar(){
+        return [
+            'name' => 'required',
+            'email' => 'required',
+            'rol_id' => 'required',
+        ];
     }
 }
