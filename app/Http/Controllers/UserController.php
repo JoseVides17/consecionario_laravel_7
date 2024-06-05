@@ -5,11 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SaveUserRequest;
 use App\Role;
 use App\User;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -22,20 +19,25 @@ class UserController extends Controller
     {
         $query = User::with(['rol']);
 
-        $nombre = $this->getInput($request, 'nombre');
+        $name = $this->getInput($request, 'name');
         $email = $this->getInput($request, 'email');
+        $fecha = $this->getInput($request, 'created_at');
 
-        if ($nombre != null){
-            $query->where('name', 'like', '%' . $nombre . '%');
+        if ($name != null){
+            $query->where('name', 'like', '%' . $name . '%');
         }
 
         if ($email != null){
             $query->where('email', 'like', '%' . $email . '%');
         }
 
+        if ($fecha != null) {
+            $query->where('created_at', 'like', '%' . $fecha . '%');
+        }
+
         $users = $query->orderBy('rol_id')->paginate(10)->withQueryString();
 
-        return view('user.index', compact('users', 'nombre', 'email'));
+        return view('user.index', compact('users', 'name', 'email', 'fecha'));
     }
 
     public function create()
