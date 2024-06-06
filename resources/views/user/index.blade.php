@@ -3,7 +3,9 @@
 @section('title', 'Usuarios')
 
 @section('content')
+    @include('partials.nav')
     <div class="container">
+
         <h1 class="mb-4">Lista de Usuarios</h1>
         <div class="card card-gray">
             <div class="card-body">
@@ -59,7 +61,7 @@
                     <td>
                         <a href="{{ route('users.show', $user->id) }}" class="btn btn-info btn-sm">Ver</a>
                         <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline-block;">
+                        <form id="frmData" action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
@@ -72,11 +74,74 @@
         {{ $users->links() }}
     </div>
 
+    <script src="{{ @asset('/assets/js/filtro.js') }}"></script>
+@endsection
+
+@push('scripts')
+
     @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+        <script>
+            Swal.fire({
+                title: '¡Éxito!',
+                text: '{{ session('success') }}',
+                icon: 'success',
+                timer: 3000
+            });
+        </script>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
         </div>
     @endif
 
-    <script src="{{ @asset('/assets/js/filtro.js') }}"></script>
-@endsection
+    @if(Auth::user()->rol->nombre == 'Administrador')
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('#frmData').forEach(function(form) {
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+
+                        const swalWithBootstrapButtons = Swal.mixin({
+                            customClass: {
+                                confirmButton: "btn btn-success",
+                                cancelButton: "btn btn-danger"
+                            },
+                            buttonsStyling: false
+                        });
+
+                        swalWithBootstrapButtons.fire({
+                            title: "¿Estás seguro?",
+                            text: "¡No podrás revertir esto!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonText: "Sí, eliminar!",
+                            cancelButtonText: "No, cancelar!",
+                            reverseButtons: true
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                swalWithBootstrapButtons.fire({
+                                    title: "Eliminado",
+                                    text: "El usuario ha sido eliminado.",
+                                    icon: "success"
+                                }).then(() => {
+                                    form.submit();
+                                });
+                            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                                swalWithBootstrapButtons.fire({
+                                    title: "Cancelado",
+                                    text: "El usuario está a salvo :)",
+                                    icon: "error"
+                                });
+                            }
+                        });
+                    });
+                });
+            });
+        </script>
+
+    @endif
+@endpush
+

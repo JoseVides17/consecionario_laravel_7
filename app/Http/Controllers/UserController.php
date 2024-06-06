@@ -35,7 +35,7 @@ class UserController extends Controller
             $query->where('created_at', 'like', '%' . $fecha . '%');
         }
 
-        $users = $query->orderBy('rol_id')->paginate(10)->withQueryString();
+        $users = $query->orderBy('rol_id')->paginate(5)->withQueryString();
 
         return view('user.index', compact('users', 'name', 'email', 'fecha'));
     }
@@ -61,7 +61,7 @@ class UserController extends Controller
         $user->password = bcrypt($data['password']);
         $user->rol_id = $data['rol_id'];
         $user->save();
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'Usuario creado correctamente!');
     }
 
     /**
@@ -94,13 +94,13 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = request()->validate($this->validar());
+        $data = $request->validate($this->validar());
         $user = User::findOrFail($id);
         $user->update($data);
         $user->rol_id = $data['rol_id'];
         $user->save();
         session()->flash('success', 'Usuario actualizado correctamente.');
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'Actualizado Correctamente!');
     }
 
     /**
@@ -120,7 +120,6 @@ class UserController extends Controller
         else
             Auth::logout();
     }
-
 
     protected function getInput(Request $request, $key, $default = null)
     {

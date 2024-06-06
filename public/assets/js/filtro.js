@@ -28,15 +28,6 @@ $(document).ready(function() {
                             <td>${user.rol ? user.rol.nombre : 'Sin Rol'}</td>
                             <td>${new Date(user.created_at).toLocaleDateString()}</td>
                             <td>${new Date(user.updated_at).toLocaleDateString()}</td>
-                            <td>
-                                <a href="/users/${user.id}" class="btn btn-info btn-sm">Ver</a>
-                                <a href="/users/${user.id}/edit" class="btn btn-warning btn-sm">Editar</a>
-                                <form action="/users/${user.id}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                                </form>
-                            </td>
                         </tr>
                     `;
                     $('#userTableBody').append(row);
