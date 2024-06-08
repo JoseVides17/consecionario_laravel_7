@@ -13,7 +13,7 @@ class AddForeignRolToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('user', function (Blueprint $table) {
             $table->foreignId('rol_id')->after('email')->constrained('roles')->onDelete('cascade')->onUpdate('cascade');
         });
     }

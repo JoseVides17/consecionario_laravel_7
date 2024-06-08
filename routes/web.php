@@ -8,18 +8,18 @@ Route::get('/', function () {
     return view('auth.login');
 })->name('app');
 
-Route::get('/dashboard', function () {})->name('dashboard');
+Route::view('/users/create', 'users.create')->name('users.create');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
+    Route::get('/home', [HomeController::class, 'index'])->name('welcome')->middleware('auth');
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', function () {})->name('dashboard');
-    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');

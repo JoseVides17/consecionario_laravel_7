@@ -3,7 +3,6 @@
 @section('title', 'Usuarios')
 
 @section('content')
-    @include('partials.nav')
     <div class="container">
 
         <h1 class="mb-4">Lista de Usuarios</h1>
@@ -27,11 +26,9 @@
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-3">
-                            <div class="" style="float: right">
-                                <button type="submit" id="btn_buscar" class="btn btn-primary btn-md mb-1" data-url="{{ route('users.index') }}">Buscar</button>
-                                <a href="{{ route('users.index') }}" class="btn btn-secondary btn-md mb-1">Resetear</a>
-                                <a href="{{ route('users.create') }}" class="btn btn-success btn-md mb-1">Nuevo</a>
-                            </div>
+                            <button type="submit" id="btn_buscar" class="btn btn-primary btn-md mb-1" data-url="{{ route('users.index') }}">Buscar</button>
+                            <a href="{{ route('users.index') }}" class="btn btn-secondary btn-md mb-1">Resetear</a>
+                            <a href="{{ route('users.create') }}" class="btn btn-success btn-md mb-1">Nuevo</a>
                         </div>
                     </div>
                 </form>
@@ -79,25 +76,7 @@
 
 @push('scripts')
 
-    @if(session('success'))
-        <script>
-            Swal.fire({
-                title: '¡Éxito!',
-                text: '{{ session('success') }}',
-                icon: 'success',
-                timer: 3000
-            });
-        </script>
-    @endif
-
-    @if(session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
-
     @if(Auth::user()->rol->nombre == 'Administrador')
-
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 document.querySelectorAll('#frmData').forEach(function(form) {
@@ -141,7 +120,6 @@
                 });
             });
         </script>
-
     @endif
 @endpush
 

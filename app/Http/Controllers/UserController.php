@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SaveUserRequest;
-use App\Role;
-use App\User;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -115,10 +114,10 @@ class UserController extends Controller
 
         if ($user != null){
             $user->delete();
-            return redirect()->route('users.index');
+            return redirect()->route('users.index')->with('success', 'Usuario eliminado correctamente!');
         }
         else
-            Auth::logout();
+            return redirect()->route('users.index')->with('error', 'No tienes permiso para eliminar este usuario!.');
     }
 
     protected function getInput(Request $request, $key, $default = null)

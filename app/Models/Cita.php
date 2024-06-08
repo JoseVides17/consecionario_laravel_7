@@ -1,8 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use http\Client;
 use Illuminate\Database\Eloquent\Model;
 
 class Cita extends Model

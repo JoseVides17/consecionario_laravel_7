@@ -1,9 +1,11 @@
 @extends('layouts.layout')
 
+@section('title', 'Crear')
+
 @section('content')
     <div class="container">
         <h1 class="mb-4">Crear Usuario</h1>
-        <form action="{{ route('users.store') }}" method="POST">
+        <form id="formCrear" action="{{ route('users.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="name" class="form-label">Nombre</label>
@@ -28,13 +30,36 @@
                 <label for="password" class="form-label">Contraseña</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn btn-success">Crear</button>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-success">Crear</button>
+                <a href="{{ route('users.index') }}" class="btn btn-secondary btn-md">Regresar</a>
+            </div>
         </form>
     </div>
 @endsection
 
 @push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('formCrear').addEventListener('submit', function(event) {
+                event.preventDefault(); // Evita que el formulario se envíe automáticamente
 
+                // Muestra el cuadro de diálogo de SweetAlert
+                Swal.fire({
+                    title: "Quieres guardar el registro?",
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: "Guardar",
+                    denyButtonText: `No, no guardar`
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire('Registro Guardado!', '', 'info');
+                        this.submit();
+                    } else if (result.isDenied) {
+                        Swal.fire("Registro no guardado!", "", "info");
+                    }
+                });
+            });
+        });
+    </script>
 @endpush
-
-

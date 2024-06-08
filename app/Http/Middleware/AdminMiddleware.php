@@ -21,7 +21,7 @@ class AdminMiddleware
             return $next($request);
         }
 
-        return redirect('/')->with('error', 'No tienes permiso para acceder a esta sección.');
+        return redirect()->route('welcome')->with('error', 'No tienes permiso para acceder a esta sección.');
     }
 }
 
