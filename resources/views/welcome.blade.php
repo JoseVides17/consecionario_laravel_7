@@ -67,7 +67,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Perfil de Usuario</h5>
                         <p class="card-text">Consulta y edita la información de tu perfil de usuario.</p>
-                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-primary">Ir a Perfil</a>
+                        <a href="{{ route('users.show', \Illuminate\Support\Facades\Auth::user()->getAuthIdentifier()) }}" class="btn btn-primary">Ir a Perfil</a>
                     </div>
                 </div>
             </div>

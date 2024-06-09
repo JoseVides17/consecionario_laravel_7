@@ -24,12 +24,14 @@
                     </div>
                 </div>
                 <div class="mt-3">
-                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning mr-2">Editar</a>
-                    <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline-block;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger mr-2">Eliminar</button>
-                    </form>
+                    @if(\Illuminate\Support\Facades\Auth::user()->rol->nombre == 'Administrador')
+                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning mr-2">Editar</a>
+                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger mr-2">Eliminar</button>
+                        </form>
+                    @endif
                     <a href="{{ route('users.index') }}" class="btn btn-primary">Volver a la lista</a>
                 </div>
             </div>

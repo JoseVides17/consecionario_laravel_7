@@ -28,7 +28,9 @@
                         <div class="col-sm-12 col-md-6 col-lg-3">
                             <button type="submit" id="btn_buscar" class="btn btn-primary btn-md mb-1" data-url="{{ route('users.index') }}">Buscar</button>
                             <a href="{{ route('users.index') }}" class="btn btn-secondary btn-md mb-1">Resetear</a>
-                            <a href="{{ route('users.create') }}" class="btn btn-success btn-md mb-1">Nuevo</a>
+                            @if(\Illuminate\Support\Facades\Auth::user()->rol->nombre == 'Administrador')
+                                <a href="{{ route('users.create') }}" class="btn btn-success btn-md mb-1">Nuevo</a>
+                            @endif
                         </div>
                     </div>
                 </form>
@@ -57,12 +59,14 @@
                     <td>{{ $user->updated_at }}</td>
                     <td>
                         <a href="{{ route('users.show', $user->id) }}" class="btn btn-info btn-sm">Ver</a>
-                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                        <form id="frmData" action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                        </form>
+                        @if(\Illuminate\Support\Facades\Auth::user()->rol->nombre == 'Administrador')
+                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                            <form id="frmData" action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                            </form>
+                        @endif
                     </td>
                 </tr>
             @endforeach

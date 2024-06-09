@@ -30,8 +30,10 @@
                             @endforeach
                         </select>
                     </div>
-
-                    <button type="submit" class="btn btn-primary btn-block" style="margin-top: 10px">Actualizar Usuario</button>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 10px">Actualizar</button>
+                        <a href="{{ route('users.index') }}" class="btn btn-secondary btn-block" style="margin-top: 10px">Regresar</a>
+                    </div>
                 </form>
             </div>
         </div>
